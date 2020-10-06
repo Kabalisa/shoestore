@@ -1,0 +1,88 @@
+@import "../../../utils//colors";
+
+.subContainer {
+  height: 86vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .carousel {
+    height: 80vh;
+    background-color: $white-color;
+    box-shadow: 0px 2px 6px $black-shadow-color;
+    width: 80%;
+
+    .arrowIcon {
+      color: $black-color;
+      font-size: 20px;
+    }
+    .carouselItem {
+      height: 80vh;
+
+      .carouselItemDiv {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+      }
+
+      .image {
+        width: 500px;
+      }
+
+      .captionContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .itemName {
+          color: $black-color;
+          font-weight: 600;
+        }
+
+        .itemPrice {
+          color: $black-color;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: "680px") {
+  .subContainer {
+    .carousel {
+      width: 93%;
+
+      .carouselItem {
+        .image {
+          width: 400px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: "460px") {
+  .subContainer {
+    .carousel {
+      .carouselItem {
+        .image {
+          width: 280px;
+        }
+
+        .captionContainer {
+          width: 80%;
+          text-align: center;
+          .itemName {
+            font-size: 17px;
+          }
+
+          .itemPrice {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

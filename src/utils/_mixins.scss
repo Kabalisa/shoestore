@@ -1,0 +1,22 @@
+@import "./colors";
+
+@mixin center-of-flexbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin Button {
+  color: $white-color;
+  background-color: $dark-red-color;
+  width: 250px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0px 3px 7px $black-shadow-color;
+  border-radius: 8px;
+  @include center-of-flexbox;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 0.7em;
+}
