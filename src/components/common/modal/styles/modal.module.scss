@@ -1,0 +1,40 @@
+@import "../../../../utils/mixins";
+@import "../../../../utils/colors";
+
+.payButton {
+  @include Button;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.successTitle {
+  display: flex;
+
+  .thumbIcon {
+    align-self: center;
+    color: #14a307;
+  }
+
+  span {
+    margin-left: 1em;
+  }
+}
+
+.successBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .checkIcon {
+    font-size: 55px;
+    color: #14a307;
+  }
+
+  span {
+    margin-top: 1em;
+    font-weight: 600;
+  }
+}

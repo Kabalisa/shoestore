@@ -1,0 +1,29 @@
+@import "../../../../utils/mixins";
+@import "../../../../utils/colors";
+
+.button {
+  width: 250px;
+  height: 45px;
+  cursor: pointer;
+  box-shadow: 0px 3px 6px $black-shadow-color;
+  margin-top: 1em;
+  border-radius: 8px;
+  @include center-of-flexbox;
+
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    span {
+      color: $white-color;
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+
+    .plusIcon {
+      color: $white-color;
+      align-self: center;
+      font-size: 20px;
+    }
+  }
+}
