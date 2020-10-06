@@ -1,53 +1,85 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleLeft,
   faArrowCircleRight,
+  faSmile,
 } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "react-bootstrap/Spinner";
 import { Layout, Button } from "../common";
+import { Context as ProductContext } from "../../context/productContext";
 import styles from "./styles/home.module.scss";
 
 const Home = () => {
+  const {
+    state: { products, loading },
+    fetchProducts,
+  } = useContext(ProductContext);
+
+  useEffect(() => {
+    let isActive = true;
+
+    if (isActive) {
+      fetchProducts();
+    }
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <Layout>
       <div className={styles.subContainer}>
-        <Carousel
-          className={styles.carousel}
-          nextIcon={
-            <FontAwesomeIcon
-              icon={faArrowCircleRight}
-              className={styles.arrowIcon}
-            />
-          }
-          prevIcon={
-            <FontAwesomeIcon
-              icon={faArrowCircleLeft}
-              className={styles.arrowIcon}
-            />
-          }
-        >
-          <Carousel.Item className={styles.carouselItem}>
-            <div className={styles.carouselItemDiv}>
-              <div>
-                <img
-                  className={styles.image}
-                  src="https://cdn.shopify.com/s/files/1/2358/2817/products/Wethenew-Sneakers-France-Air-Jordan-1-Retro-High-OG-Fearless-1_2000x.png?v=1571135078"
-                  alt="Gebeya shoe"
-                />
-              </div>
-              <div className={styles.captionContainer}>
-                <h3 className={styles.itemName}>First slide label</h3>
-                <p className={styles.itemPrice}>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </div>
-              <div>
-                <Button />
-              </div>
-            </div>
-          </Carousel.Item>
-        </Carousel>
+        {loading ? (
+          <Spinner animation="grow" color="#9124bc" />
+        ) : !products.length ? (
+          <>
+            <FontAwesomeIcon icon={faSmile} className={styles.smileIcon} />
+            <div className={styles.noProduct}>No products available</div>
+          </>
+        ) : (
+          <Carousel
+            className={styles.carousel}
+            nextIcon={
+              <FontAwesomeIcon
+                icon={faArrowCircleRight}
+                className={styles.arrowIcon}
+              />
+            }
+            prevIcon={
+              <FontAwesomeIcon
+                icon={faArrowCircleLeft}
+                className={styles.arrowIcon}
+              />
+            }
+            interval={300000}
+          >
+            {products.map((product) => (
+              <Carousel.Item className={styles.carouselItem} key={product.id}>
+                <div className={styles.carouselItemDiv}>
+                  <div>
+                    <img
+                      className={styles.image}
+                      src={product.imageUrl}
+                      alt="Gebeya shoe"
+                    />
+                  </div>
+                  <div className={styles.captionContainer}>
+                    <h3 className={styles.itemName}>{product.nom}</h3>
+                    <p className={styles.itemPrice}>
+                      {`${product.currency}${product.price}`}
+                    </p>
+                  </div>
+                  <div>
+                    <Button isIncart={product.isIncart} />
+                  </div>
+                </div>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        )}
       </div>
     </Layout>
   );

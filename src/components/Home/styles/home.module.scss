@@ -7,6 +7,16 @@
   justify-content: center;
   align-items: center;
 
+  .smileIcon {
+    color: $red-color;
+    font-size: 70px;
+  }
+
+  .noProduct {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
   .carousel {
     height: 80vh;
     background-color: $white-color;
