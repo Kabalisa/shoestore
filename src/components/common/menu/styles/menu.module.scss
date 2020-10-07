@@ -11,6 +11,10 @@
   .textContainer {
     display: flex;
     width: 75%;
+
+    .link {
+      text-decoration: none;
+    }
     .textOneContainer {
       font-size: 25px;
       font-weight: bold;

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import { Layout, CartItem, NameModal } from "../common";
+import { Context as ProductContext } from "../../context/productContext";
 import styles from "./styles/cart.module.scss";
 
 class Cart extends Component {
@@ -14,6 +16,11 @@ class Cart extends Component {
   };
 
   render() {
+    const {
+      state: {
+        cart: { cartItems, cartTotalPrice },
+      },
+    } = this.context;
     const { modalShow } = this.state;
 
     return (
@@ -21,18 +28,19 @@ class Cart extends Component {
         <div className={styles.subContainer}>
           <div
             className={styles.cartContainer}
-            style={true ? {} : { justifyContent: "center" }}
+            style={cartItems.length ? {} : { justifyContent: "center" }}
           >
-            {true ? (
+            {cartItems.length ? (
               <>
                 <div className={styles.cartItemContainer}>
-                  <CartItem />
-                  <CartItem />
-                  <CartItem />
-                  <CartItem />
+                  {cartItems.map((cartItem) => {
+                    return <CartItem cartItem={cartItem} key={cartItem.id} />;
+                  })}
                 </div>
                 <div className={styles.checkout}>
-                  <div className={styles.totalPrice}>Total Price: $1000</div>
+                  <div
+                    className={styles.totalPrice}
+                  >{`Total Price: $${cartTotalPrice}`}</div>
                   <div
                     className={styles.payButton}
                     role="button"
@@ -53,9 +61,11 @@ class Cart extends Component {
                   icon={faShoppingCart}
                 />
                 <div>Your cart is empty</div>
-                <div className={styles.payButton} style={{ fontSize: 18 }}>
-                  Keep Shopping
-                </div>
+                <Link to="/" className={styles.link}>
+                  <div className={styles.payButton} style={{ fontSize: 18 }}>
+                    Keep Shopping
+                  </div>
+                </Link>
               </div>
             )}
           </div>
@@ -64,5 +74,7 @@ class Cart extends Component {
     );
   }
 }
+
+Cart.contextType = ProductContext;
 
 export { Cart };

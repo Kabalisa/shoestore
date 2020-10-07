@@ -12,10 +12,8 @@ import { Context as ProductContext } from "../../context/productContext";
 import styles from "./styles/home.module.scss";
 
 const Home = () => {
-  const {
-    state: { products, loading },
-    fetchProducts,
-  } = useContext(ProductContext);
+  const { state, fetchProducts, addTocart } = useContext(ProductContext);
+  const { products, loading } = state;
 
   useEffect(() => {
     let isActive = true;
@@ -33,7 +31,7 @@ const Home = () => {
     <Layout>
       <div className={styles.subContainer}>
         {loading ? (
-          <Spinner animation="grow" color="#9124bc" />
+          <Spinner animation="grow" style={{ color: "#9124bc" }} />
         ) : !products.length ? (
           <>
             <FontAwesomeIcon icon={faSmile} className={styles.smileIcon} />
@@ -73,7 +71,10 @@ const Home = () => {
                     </p>
                   </div>
                   <div>
-                    <Button isIncart={product.isIncart} />
+                    <Button
+                      isIncart={product.isIncart}
+                      addTocart={() => addTocart(product, state)}
+                    />
                   </div>
                 </div>
               </Carousel.Item>
