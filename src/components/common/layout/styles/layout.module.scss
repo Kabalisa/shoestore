@@ -16,5 +16,17 @@
     align-items: center;
     font-size: 14px;
     font-weight: 600;
+
+    .copyright {
+      display: flex;
+
+      .copyrightIcon {
+        color: $white-color;
+        align-self: center;
+        font-size: 12px;
+        margin-right: 0.6em;
+        margin-top: 0.23em;
+      }
+    }
   }
 }

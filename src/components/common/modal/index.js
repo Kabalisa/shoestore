@@ -3,17 +3,33 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { Context as ProductContext } from "../../../context/productContext";
 import styles from "./styles/modal.module.scss";
 
 class NameModal extends Component {
+  state = {
+    name: "",
+    payed: false,
+  };
+
+  handlePay(name) {
+    if (name) {
+      this.setState({ payed: true });
+    }
+  }
+
   render() {
+    const { name, payed } = this.state;
+    const { state, resetCart } = this.context;
+
     return (
       <Modal
         {...this.props}
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        onExit={payed ? () => resetCart(state) : undefined}
       >
-        {true ? (
+        {!payed ? (
           <>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
@@ -24,10 +40,18 @@ class NameModal extends Component {
               <Form>
                 <Form.Group>
                   <Form.Label>Enter your Name</Form.Label>
-                  <Form.Control type="text" placeholder="Name" />
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    onChange={(e) => this.setState({ name: e.target.value })}
+                  />
                 </Form.Group>
                 <Form.Group className={styles.buttonContainer}>
-                  <div className={styles.payButton} role="button">
+                  <div
+                    className={styles.payButton}
+                    role="button"
+                    onClick={() => this.handlePay(name)}
+                  >
                     Finish
                   </div>
                 </Form.Group>
@@ -53,7 +77,7 @@ class NameModal extends Component {
                   className={styles.checkIcon}
                   icon={faCheckCircle}
                 />
-                <span>Fiston, you have payed for your cart</span>
+                <span>{`${name}, you have payed for your cart`}</span>
               </div>
             </Modal.Body>
           </>
@@ -62,5 +86,7 @@ class NameModal extends Component {
     );
   }
 }
+
+NameModal.contextType = ProductContext;
 
 export { NameModal };
