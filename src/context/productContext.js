@@ -71,6 +71,16 @@ const productContext = (state, action) => {
         };
       }
 
+    case "RESET_CART":
+      return {
+        ...state,
+        products: action.payload,
+        cart: {
+          cartItems: [],
+          cartTotalPrice: 0,
+        },
+      };
+
     default:
       return state;
   }
@@ -185,6 +195,16 @@ const initialiseCart = (dispatch) => async () => {
   }
 };
 
+const resetCart = (dispatch) => async (state) => {
+  await store.clearAll();
+
+  let resetProducts = state.products.map((item) => {
+    return { ...item, isIncart: false };
+  });
+
+  dispatch({ type: "RESET_CART", payload: resetProducts });
+};
+
 export const { Context, Provider } = createDatacontext(
   productContext,
   {
@@ -193,6 +213,7 @@ export const { Context, Provider } = createDatacontext(
     changeQuantity,
     removeFromCart,
     initialiseCart,
+    resetCart,
   },
   initialState
 );
