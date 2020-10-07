@@ -36,6 +36,10 @@
       }
     }
 
+    .link {
+      text-decoration: none;
+    }
+
     .payButton {
       @include Button;
     }
